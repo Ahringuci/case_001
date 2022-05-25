@@ -1,9 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { GET_API } from "../../api";
 import { PRODUCTS } from "../../constants";
+import { API_PRODUCTS } from "../../api/products";
+
 const initValue = () => {
     let _value = GET_API("get", { from: PRODUCTS });
-    return _value;
+    if (_value) {
+        return _value;
+    } else {
+        return API_PRODUCTS;
+    }
 };
 
 export const counterSlice = createSlice({
@@ -21,11 +27,14 @@ export const counterSlice = createSlice({
             state.value = newValue;
             GET_API("set", { from: PRODUCTS, value: newValue });
         },
-        editItem: (state, action) => {
-            state.value -= 1;
-        },
+
         editItemSubmit: (state, action) => {
-            state.value += action.payload;
+            let _newValue = state.value.filter(
+                (item) => item.id !== action.payload.id
+            );
+            _newValue.unshift(action.payload);
+            state.value = _newValue;
+            GET_API("set", { from: PRODUCTS, value: _newValue });
         },
     },
 });

@@ -1,14 +1,22 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { deleteItem, editItem } from "./productSlide";
+
 function ProductItems(props) {
     const { id, title, price, category, description, image, rating } =
         props.item;
-    const { cbEdit } = props;
+    const { callbackEdit, callbackDelete } = props;
     const dispatch = useDispatch();
+
     const hanldeEdit = () => {
-        cbEdit && cbEdit(props.item);
+        callbackEdit && callbackEdit(props.item);
     };
+    const [deleteState, setDeleteState] = React.useState(false);
+    const hanldeDelete = () => {
+        callbackDelete && callbackDelete(id);
+        // dispatch(deleteItem(id))
+    };
+
     return (
         <tr className="product-item">
             <th>{id}</th>
@@ -17,18 +25,29 @@ function ProductItems(props) {
                 <img className="img" src={image} alt={title} />
             </td>
             <td>{price}</td>
-            <td>{category}</td>
+            <td>
+                {category &&
+                    category.map((cate) => (
+                        <span key={cate.id} className="tag">
+                            {cate.title}
+                        </span>
+                    ))}
+            </td>
             <td>{description}</td>
             <td>{rating.rate}</td>
             <td>
-                <button aria-label="edit value" onClick={hanldeEdit}>
-                    Edit
+                <button
+                    className="outline"
+                    aria-label="edit value"
+                    onClick={hanldeEdit}
+                >
+                    Chỉnh sửa
                 </button>
                 <button
                     aria-label="delete value"
-                    onClick={() => dispatch(deleteItem(id))}
+                    onClick={() => hanldeDelete()}
                 >
-                    Delete
+                    Xóa
                 </button>
             </td>
         </tr>

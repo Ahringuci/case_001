@@ -1,37 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 
+import "./aside.scss";
 function Aside() {
-    const initialAside = [
-        {
-            label: "Dashboard",
-            href: "/dashboard",
-            isActive: true,
-        },
-        {
-            label: "Products",
-            href: "/products",
-            isActive: true,
-        },
-        {
-            label: "Categories",
-            href: "/categories",
-            isActive: true,
-        },
-        {
-            label: "Staff",
-            href: "/staff",
-            isActive: true,
-        },
+    const asideLists = [
+        { id: 1, label: "Bảng", href: "/dashboard", isActive: true },
+        { id: 2, label: "Sản phẩm", href: "/products", isActive: false },
+        { id: 3, label: "Loại", href: "/categories", isActive: false },
+        { id: 4, label: "Nhân viên", href: "/staff", isActive: false },
     ];
-
-    const [aside, setAside] = React.useState(initialAside);
+    const [aside, setAside] = React.useState(asideLists);
     return (
         <section className="aside">
             <ul className="aside__menu">
                 {aside.map((item) => (
-                    <li key={item.label}>
-                        <Link to={item.href}>{item.label}</Link>
+                    <li key={item.id}>
+                        <NavLink to={item.href}>{item.label}</NavLink>
                     </li>
                 ))}
             </ul>

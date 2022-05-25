@@ -1,0 +1,52 @@
+header {
+    position: fixed;
+    z-index: 1020;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+
+    background-color: #333;
+
+    .header-logo {
+        width: 200px;
+        height: 60px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        background-color: #222;
+
+        color: var(--main);
+        font-family: 'Smooch', cursive;
+        font-size: 50px;
+        font-weight: 700;
+    }
+}
+
+nav {
+    display: flex;
+    align-items: center;
+}
+
+.header-avatar {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+
+    padding-left: 20px;
+    padding-right: 20px;
+
+    p {
+        color: #ccc;
+        font-size: 14px;
+
+        margin-right: 12px;
+    }
+
+    button {
+        width: 100px;
+        margin-top: 0;
+    }
+}

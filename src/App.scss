@@ -1,0 +1,155 @@
+*,
+::before,
+::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    --red: #ff0844;
+    --green: #0fd850;
+    --main: #ff0844;
+    --primary: #48c6ef;
+
+    --error: #ff0844;
+    --success: #0fd850;
+}
+
+body {
+    font-family: 'Alata', sans-serif;
+    font-weight: 400;
+    line-height: 1.15;
+    font-size: 16px;
+    letter-spacing: 0.05em;
+
+    color: #222;
+}
+
+.f-smooch {
+    font-family: 'Smooch', cursive !important;
+}
+
+.input,
+.textarea,
+.select {
+    display: block;
+
+    width: 100%;
+
+    outline: 0;
+    border: 0;
+    border-radius: 3px;
+
+    padding: 10px;
+    margin-bottom: 12px;
+    margin-top: 4px;
+
+    font-size: 14px;
+    letter-spacing: 0.05em;
+
+    background-color: #efefef;
+
+    &:focus {
+        // border: 3px solid #ccc;
+        box-shadow: 0 0 0 2px var(--main);
+    }
+}
+
+button {
+    width: 200px;
+
+    margin-top: 5px;
+    padding: 10px;
+
+    outline: 0;
+    border: 0;
+    border-radius: 4px;
+
+    color: #fff;
+    font-size: 14px;
+
+    border: 2px solid var(--red);
+    background-color: var(--red);
+
+    cursor: pointer;
+
+    &.outline {
+        background-color: #fff;
+        color: var(--red);
+    }
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    font-size: inherit;
+    padding: 4px;
+}
+
+.txt {
+    font-size: 14px;
+    font-weight: 500;
+
+    &-error {
+        color: #ff0844;
+    }
+
+    &-success {
+        color: #0fd850;
+    }
+}
+
+.container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.group {
+    margin-top: 20px;
+    position: relative;
+
+    .password-view {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+
+        transform: translateY(-50%);
+
+        width: 8px;
+        height: 8px;
+
+        border-radius: 99px;
+        background-color: #333;
+
+        &::after {
+            content: '';
+            width: 14px;
+            height: 14px;
+            border-radius: 99px;
+
+            border: 1px solid transparent;
+            border-top-color: #222;
+            border-left-color: #222;
+
+            position: absolute;
+            z-index: -1;
+
+            top: -3px;
+            left: -3px;
+            transform: rotate(45deg);
+        }
+
+        &.hide {
+            &::after {
+                display: none
+            }
+        }
+    }
+}
+
+.por {
+    &-relative {
+        position: relative;
+    }
+}

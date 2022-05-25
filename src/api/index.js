@@ -3,7 +3,7 @@ import { API_STAFF } from "./staff";
 import { API_CATEGORIES } from "./categories";
 import { v4 as uuidv4 } from "uuid";
 
-import { LOCAL_SET, PRODUCTS, CATEGORIES, STAFFS } from "../constants";
+import { LOCAL_SET_API, PRODUCTS, CATEGORIES, STAFFS } from "../constants";
 export const ApiFromLocalStorage = (type, payload) => {
     if (type === "get") {
         return localStorage.getItem(payload.from);
@@ -15,9 +15,13 @@ export const ApiFromLocalStorage = (type, payload) => {
         localStorage.removeItem(payload.from);
     }
 };
-
+export const defaultAPI = {
+    [PRODUCTS]: API_PRODUCTS,
+    [STAFFS]: API_STAFF,
+    [CATEGORIES]: API_CATEGORIES,
+};
 export const initAPI = () => {
-    ApiFromLocalStorage("set", { from: LOCAL_SET, value: true });
+    ApiFromLocalStorage("set", { from: LOCAL_SET_API, value: true });
     ApiFromLocalStorage("set", { from: PRODUCTS, value: API_PRODUCTS });
     ApiFromLocalStorage("set", { from: STAFFS, value: API_STAFF });
     ApiFromLocalStorage("set", { from: CATEGORIES, value: API_CATEGORIES });

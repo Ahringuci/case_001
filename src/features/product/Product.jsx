@@ -2,19 +2,43 @@ import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 import ProductItems from "./productItem";
 import ProductEdit from "./productEdit";
-import "./product.css";
-import { GET_API } from "../../api";
-import { PRODUCTS } from "../../constants";
+import YesNoConfirm from "../../components/Comfirn";
+
+import { useDispatch } from "react-redux";
+import { deleteItem } from "./productSlide";
+
+import "./product.scss";
 
 export function Product() {
+    const dispatch = useDispatch();
     const value = useSelector((state) => state.products.value);
     const [isEdit, setIsEdit] = React.useState(false);
+
     const [itemEdit, setItemEdit] = React.useState(false);
-    // const [listsProduct, setListProduct] = React.useState([]);
-    //  console.log(value);
-    const CBHanldeEdit = (props) => {
-        setItemEdit(props);
-        console.log(props);
+
+    const callbackHandleEdit = (w) => {
+        setItemEdit(w);
+        setIsEdit(true);
+        console.log("edit");
+    };
+
+    const [confirmDelete, setConfirmDelete] = React.useState({
+        id: -1,
+        sta: false,
+    });
+    const callbackHandleDelete = (w) => {
+        setConfirmDelete({ id: w, sta: true });
+    };
+    const callbackHandleConfirm = (e) => {
+        if (e) {
+            dispatch(deleteItem(confirmDelete.id));
+        }
+        setConfirmDelete({ id: -1, sta: false });
+    };
+    const CBHanldeCancel = () => {
+        setItemEdit({});
+        setIsEdit(false);
+        console.log("cancel");
     };
     useEffect(() => {
         // const value = GET_API("get", { from: PRODUCTS });
@@ -22,13 +46,13 @@ export function Product() {
     }, []);
 
     return (
-        <section className="">
+        <section className="products-block">
             <h2>Product Lists</h2>
-
+            {confirmDelete.sta && (
+                <YesNoConfirm callbackConfirm={callbackHandleConfirm} />
+            )}
             {isEdit && (
-                <div className="product-edit">
-                    <ProductEdit item={itemEdit} />
-                </div>
+                <ProductEdit item={itemEdit} callbackCancel={CBHanldeCancel} />
             )}
 
             <div className="over-scroll">
@@ -51,28 +75,13 @@ export function Product() {
                                 <ProductItems
                                     key={item.id}
                                     item={item}
-                                    cbEdit={CBHanldeEdit}
+                                    callbackEdit={callbackHandleEdit}
+                                    callbackDelete={callbackHandleDelete}
                                 />
                             ))}
                     </tbody>
                 </table>
             </div>
-            {/* <div>
-                <button
-                    aria-label="Increment value"
-                    onClick={() => dispatch(increment())}
-                >
-                    Increment
-                </button>
-                <span>{count}</span>
-                <button
-                    aria-label="Decrement value"
-                    onClick={() => dispatch(decrement())}
-                >
-                    Decrement
-                </button>
-            </div> */}
-            {/* <ProductItems/> */}
         </section>
     );
 }

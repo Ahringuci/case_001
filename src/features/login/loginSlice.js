@@ -1,9 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { GET_API, ApiFromLocalStorage } from "../../api";
-
+import { STAFFS, USER_LOGIN } from "../../constants";
+import { API_STAFF } from "../../api/staff";
 export const loginSlice = createSlice({
     name: "login",
     initialState: {
+        isLogin: false,
+        role: -1,
         error: {
             email: "",
             password: "",
@@ -17,13 +20,13 @@ export const loginSlice = createSlice({
             const error = {};
             const user = {};
             if (email === "") {
-                error.email = "khong duoc de trong !";
+                error.email = "Tài khoản không được trống !";
             } else {
                 if (password === "") {
-                    error.password = "khong duoc de trong";
+                    error.password = "Mật khẩu không được trống";
                 } else {
                     let _check = false;
-                    const Staff = GET_API("get", { from: "staff" });
+                    const Staff = GET_API("get", { from: STAFFS }) || API_STAFF;
 
                     if (Staff) {
                         for (let _staff of Staff) {
@@ -33,34 +36,32 @@ export const loginSlice = createSlice({
                             ) {
                                 _check = true;
                                 user.email = email;
-                                user.password = password;
-                                user.isLogin = true;
                                 user.role = _staff.role;
                                 break;
                             }
                         }
 
                         if (_check) {
-                            console.log("check, login sucess");
+                            state.isLogin = true;
+                            state.role = user.role;
                             ApiFromLocalStorage("set", {
-                                from: "user",
+                                from: USER_LOGIN,
                                 value: user,
                             });
                         } else {
-                            error.loginState = "sai tai khoan hoac mat khau";
+                            error.loginState = "Sai tài khoản / mật khẩu";
                         }
                     } else {
-                        error.loginState = "loi he thong";
+                        error.loginState =
+                            "Lỗi hệ thống, tải lại trang và thử lại";
                     }
                 }
             }
             state.error = error;
         },
-        logout: (state, action) => {
-            ApiFromLocalStorage("unset", { from: "user" });
-        },
-        forgot: (state, action) => {
-            console.log(action.payload);
+        logout: (state) => {
+            ApiFromLocalStorage("unset", { from: USER_LOGIN });
+            state.isLogin = false;
         },
     },
 });
