@@ -1,22 +1,35 @@
 import React from "react";
-import { useDispatch } from "react-redux";
-import { deleteItem, editItem } from "./productSlide";
+
+import { defaultAPI, GET_API } from "../../api";
+import { CATEGORIES } from "../../constants";
 
 function ProductItems(props) {
     const { id, title, price, category, description, image, rating } =
         props.item;
+
+    const categoryLists =
+        GET_API("get", { from: CATEGORIES }) || defaultAPI.CATEGORIES;
+
     const { callbackEdit, callbackDelete } = props;
-    const dispatch = useDispatch();
 
     const hanldeEdit = () => {
         callbackEdit && callbackEdit(props.item);
     };
-    const [deleteState, setDeleteState] = React.useState(false);
     const hanldeDelete = () => {
         callbackDelete && callbackDelete(id);
         // dispatch(deleteItem(id))
     };
 
+    const CateTag = () => {
+        for (let _item of categoryLists) {
+            for (let _cat of category) {
+                if (_cat.id === _item.id) {
+                    return <span className="tag">{_item.title}</span>;
+                }
+            }
+        }
+        return <span></span>;
+    };
     return (
         <tr className="product-item">
             <th>{id}</th>
@@ -26,12 +39,7 @@ function ProductItems(props) {
             </td>
             <td>{price}</td>
             <td>
-                {category &&
-                    category.map((cate) => (
-                        <span key={cate.id} className="tag">
-                            {cate.title}
-                        </span>
-                    ))}
+                <CateTag />
             </td>
             <td>{description}</td>
             <td>{rating.rate}</td>

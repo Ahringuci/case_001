@@ -1,18 +1,25 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { GET_API, defaultAPI } from "../../api";
-import { editItemSubmit } from "./productSlide";
+import { addItem } from "./productSlide";
 import { CATEGORIES } from "../../constants";
 
-function ProductEdit(props) {
+function ProductAdd(props) {
     const dispatch = useDispatch();
     const categoryLists =
         GET_API("get", { from: CATEGORIES }) || defaultAPI.CATEGORIES;
 
-    const { callbackCancel } = props;
+    const { callbackCancelAddProduct } = props;
 
-    const [itemEdit, setItemEdit] = useState(props.item);
+    const [itemEdit, setItemEdit] = useState({
+        title: "",
+        price: "",
+        category: {},
+        image: "https://via.placeholder.com/150",
+        description: "",
+    });
     const [itemCategories, setItemCategories] = useState(categoryLists[0]);
+
     const hanldeChangeCategory = (e) => {
         let _id = e.target.value;
         for (let _cate of categoryLists) {
@@ -28,15 +35,16 @@ function ProductEdit(props) {
 
     const handleSubmitEdit = () => {
         if (itemEdit.title !== "" && itemEdit.price !== "") {
-            let _setItem = { ...itemEdit, category: [itemCategories] };
+            let _setItem = { ...itemEdit };
+            _setItem.category = [itemCategories];
 
-            dispatch(editItemSubmit(_setItem));
-            callbackCancel && callbackCancel();
+            dispatch(addItem(_setItem));
+            callbackCancelAddProduct && callbackCancelAddProduct();
         }
     };
 
     const handleSubmitCancel = () => {
-        callbackCancel && callbackCancel();
+        callbackCancelAddProduct && callbackCancelAddProduct(false);
     };
 
     return (
@@ -47,6 +55,7 @@ function ProductEdit(props) {
             ></div>
 
             <div className="product-edit-group">
+                <h2>Thêm sản phẩm</h2>
                 <label>
                     Tên
                     <input
@@ -54,6 +63,7 @@ function ProductEdit(props) {
                         type="text"
                         name="title"
                         value={itemEdit.title || ""}
+                        placeholder="Nhập tên sản phẩm"
                         onChange={(e) => handleChange(e)}
                     />
                 </label>
@@ -64,6 +74,7 @@ function ProductEdit(props) {
                         type="number"
                         name="price"
                         value={itemEdit.price || ""}
+                        placeholder="Nhập gía sản phẩm"
                         onChange={(e) => handleChange(e)}
                     />
                 </label>
@@ -88,6 +99,7 @@ function ProductEdit(props) {
                         type="text"
                         name="image"
                         value={itemEdit.image || ""}
+                        placeholder="Nhập đường dẫn / url hình ảnh"
                         onChange={(e) => handleChange(e)}
                     />
                 </label>
@@ -100,6 +112,7 @@ function ProductEdit(props) {
                         type="text"
                         name="description"
                         value={itemEdit.description || ""}
+                        placeholder="Nhập mô tả"
                         onChange={(e) => handleChange(e)}
                     />
                 </label>
@@ -114,4 +127,4 @@ function ProductEdit(props) {
     );
 }
 
-export default ProductEdit;
+export default ProductAdd;

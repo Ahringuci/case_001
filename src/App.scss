@@ -105,6 +105,12 @@ a {
     padding-right: 20px;
 }
 
+.scroll {
+    overflow: scroll;
+    height: 600px;
+    max-height: 80vh;
+}
+
 .group {
     margin-top: 20px;
     position: relative;

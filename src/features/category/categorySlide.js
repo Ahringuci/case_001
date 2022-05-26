@@ -1,17 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GET_API } from "../../api";
-import { PRODUCTS } from "../../constants";
-import { API_PRODUCTS } from "../../api/products";
+import { GET_API, defaultAPI } from "../../api";
+import { CATEGORIES } from "../../constants";
 
 import { v4 as uuidv4 } from "uuid";
 
 const initValue = () => {
-    let _value = GET_API("get", { from: PRODUCTS });
-    if (_value) {
-        return _value;
-    } else {
-        return API_PRODUCTS;
-    }
+    let _value = GET_API("get", { from: CATEGORIES }) || defaultAPI.CATEGORIES;
+    return _value;
 };
 
 export const counterSlice = createSlice({
@@ -20,38 +15,39 @@ export const counterSlice = createSlice({
         value: initValue(),
     },
     reducers: {
-        deleteItem: (state, action) => {
+        deleteCategory: (state, action) => {
             const newValue = state.value.filter(
                 (item) => item.id !== action.payload
             );
             state.value = newValue;
-            GET_API("set", { from: PRODUCTS, value: newValue });
+            GET_API("set", { from: CATEGORIES, value: newValue });
         },
 
-        editItemSubmit: (state, action) => {
+        editCategorySubmit: (state, action) => {
             let _newValue = state.value.filter(
                 (item) => item.id !== action.payload.id
             );
             _newValue.unshift(action.payload);
             state.value = _newValue;
-            GET_API("set", { from: PRODUCTS, value: _newValue });
+
+            GET_API("set", { from: CATEGORIES, value: _newValue });
         },
-        addItem: (state, action) => {
+        addCategory: (state, action) => {
             let _newValue = [...state.value],
                 _payload = action.payload;
 
-            let _id = uuidv4(),
-                _rate = { rate: 0, count: 0 };
+            let _id = uuidv4();
             _payload.id = _id;
-            _payload.rating = _rate;
             _newValue.unshift(_payload);
+
             state.value = _newValue;
-            GET_API("set", { from: PRODUCTS, value: _newValue });
+            GET_API("set", { from: CATEGORIES, value: _newValue });
         },
     },
 });
 
 // Action creators are generated for each case reducer function
-export const { deleteItem, addItem, editItemSubmit } = counterSlice.actions;
+export const { deleteCategory, addCategory, editCategorySubmit } =
+    counterSlice.actions;
 
 export default counterSlice.reducer;

@@ -1,10 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Product } from "../../features/product/Product.jsx";
 
 function Products() {
-    const [listProduct, setListProduct] = React.useState([]);
-    useEffect(() => {}, []);
-
     return (
         <section className="litst-block">
             <Product />
@@ -12,4 +9,4 @@ function Products() {
     );
 }
 
-export default Product;
+export default Products;

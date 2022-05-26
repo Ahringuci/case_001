@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { login, logout } from "./loginSlice";
+import { login } from "./loginSlice";
 import { useNavigate } from "react-router-dom";
 import { USER_LOGIN } from "../../constants";
 /** scss */
@@ -22,7 +22,7 @@ const Login = () => {
         const user = JSON.parse(localStorage.getItem(USER_LOGIN));
 
         if ((user && user.email) || error === null) {
-            navigate("/");
+            navigate("/dashboard");
         }
     }, [navigate, error]);
 
@@ -43,6 +43,11 @@ const Login = () => {
     };
     return (
         <div className="login">
+            <p className="login-note">
+                tài khoản: admin@gmail.com
+                <br />
+                mật khẩu: 123
+            </p>
             <form onSubmit={(e) => handleSubmit(e)}>
                 <h2>Đăng nhập</h2>
                 <div className="group">

@@ -1,7 +1,12 @@
 import React from "react";
+import { Category } from "../../features/category/Category";
 
-function Categories() {
-    return <div>Categories</div>;
+function CategoryPage() {
+    return (
+        <section className="litst-block">
+            <Category />
+        </section>
+    );
 }
 
-export default Categories;
+export default CategoryPage;

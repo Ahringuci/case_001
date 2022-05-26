@@ -12,14 +12,14 @@ import { USER_LOGIN } from "../constants";
 import "./layout.scss";
 
 function Layout() {
-    let _navigate = useNavigate();
+    let navigate = useNavigate();
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem(USER_LOGIN));
         if (!user || user === null || user === undefined) {
-            _navigate("/login");
+            navigate("/login");
         }
-    }, []);
+    }, [navigate]);
 
     return (
         <>

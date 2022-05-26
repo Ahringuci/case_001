@@ -1,87 +1,97 @@
-import React, { useEffect } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import ProductItems from "./productItem";
-import ProductEdit from "./productEdit";
-import YesNoConfirm from "../../components/Comfirn";
+import ProductTable from "./productTable";
+import ProductAdd from "./productAdd";
 
-import { useDispatch } from "react-redux";
-import { deleteItem } from "./productSlide";
+import { defaultAPI, GET_API } from "../../api";
+import { CATEGORIES } from "../../constants";
 
 import "./product.scss";
 
 export function Product() {
-    const dispatch = useDispatch();
     const value = useSelector((state) => state.products.value);
-    const [isEdit, setIsEdit] = React.useState(false);
 
-    const [itemEdit, setItemEdit] = React.useState(false);
+    const categoryLists =
+        GET_API("get", { from: CATEGORIES }) || defaultAPI.CATEGORIES;
 
-    const callbackHandleEdit = (w) => {
-        setItemEdit(w);
-        setIsEdit(true);
-        console.log("edit");
-    };
-
-    const [confirmDelete, setConfirmDelete] = React.useState({
-        id: -1,
-        sta: false,
+    const [findProduct, setFindProduct] = useState({
+        productname: "",
+        productcate: "-1",
     });
-    const callbackHandleDelete = (w) => {
-        setConfirmDelete({ id: w, sta: true });
+    const hanldeFindProduct = (e) => {
+        setFindProduct({ ...findProduct, [e.target.name]: e.target.value });
     };
-    const callbackHandleConfirm = (e) => {
-        if (e) {
-            dispatch(deleteItem(confirmDelete.id));
+
+    const [addProduct, setAddProduct] = useState(false);
+    const handleAddProduct = (e) => {
+        e ? setAddProduct(true) : setAddProduct(false);
+    };
+
+    let _aaa = [...value];
+
+    if (findProduct.productcate !== "-1") {
+        _aaa = value.filter(
+            (p) =>
+                p.title.includes(findProduct.productname) &&
+                p.category[0].id === findProduct.productcate
+        );
+    } else {
+        if (findProduct.productname !== "") {
+            _aaa = value.filter((p) =>
+                p.title.includes(findProduct.productname)
+            );
         }
-        setConfirmDelete({ id: -1, sta: false });
-    };
-    const CBHanldeCancel = () => {
-        setItemEdit({});
-        setIsEdit(false);
-        console.log("cancel");
-    };
-    useEffect(() => {
-        // const value = GET_API("get", { from: PRODUCTS });
-        // value && setListProduct(value);
-    }, []);
+    }
 
     return (
         <section className="products-block">
             <h2>Product Lists</h2>
-            {confirmDelete.sta && (
-                <YesNoConfirm callbackConfirm={callbackHandleConfirm} />
-            )}
-            {isEdit && (
-                <ProductEdit item={itemEdit} callbackCancel={CBHanldeCancel} />
-            )}
 
-            <div className="over-scroll">
-                <table className="table product-table">
-                    <thead>
-                        <tr>
-                            <th>id</th>
-                            <th>title</th>
-                            <th>image</th>
-                            <th>price</th>
-                            <th>category</th>
-                            <th>description</th>
-                            <th>rating</th>
-                            <th>actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {value.length > 0 &&
-                            value.map((item) => (
-                                <ProductItems
-                                    key={item.id}
-                                    item={item}
-                                    callbackEdit={callbackHandleEdit}
-                                    callbackDelete={callbackHandleDelete}
-                                />
-                            ))}
-                    </tbody>
-                </table>
+            <div className="search-area">
+                <div className="group-inline">
+                    <label className="group-input">
+                        Tìm kiếm
+                        <input
+                            className="input"
+                            type="text"
+                            name="productname"
+                            value={findProduct.productname || ""}
+                            onChange={(e) => hanldeFindProduct(e)}
+                            placeholder="Nhập tên sản phẩm..."
+                        />
+                    </label>
+
+                    <label className="group-select">
+                        Danh mục
+                        <select
+                            className="select"
+                            name="productcate"
+                            defaultValue="-1"
+                            onChange={(e) => hanldeFindProduct(e)}
+                        >
+                            <option value="-1">Tất cả</option>
+                            {categoryLists.length > 0 &&
+                                categoryLists.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>
+                                        {cat.title}
+                                    </option>
+                                ))}
+                        </select>
+                    </label>
+
+                    <button
+                        className="outline"
+                        onClick={() => handleAddProduct(true)}
+                    >
+                        Thêm sản phẩm
+                    </button>
+                </div>
             </div>
+
+            <ProductTable productLists={_aaa} />
+            {addProduct && (
+                <ProductAdd callbackCancelAddProduct={handleAddProduct} />
+            )}
         </section>
     );
 }

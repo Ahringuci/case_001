@@ -1,4 +1,4 @@
-.products-block {
+.categorys-block {
     h2 {
         margin-bottom: 20px;
     }
@@ -8,7 +8,7 @@
     }
 }
 
-.product-edit {
+.category-edit {
     position: fixed;
     z-index: 1080;
     top: 0;
@@ -113,7 +113,7 @@
     overflow: auto;
 }
 
-.product-table {
+.category-table {
     width: 100%;
     min-width: 1024px;
     outline: 0;
@@ -128,49 +128,26 @@
 
     th {
         &:nth-child(1) {
-            width: 40px;
-            min-width: 40px;
+            width: 100px;
+            min-width: 100px;
         }
 
         &:nth-child(2) {
-            width: 180px;
-            min-width: 180px;
+            width: 100%;
+            min-width: 200px;
+
         }
 
         &:nth-child(3) {
-            width: 80px;
-            min-width: 80px;
-        }
-
-        &:nth-child(4) {
-            width: 70px;
-            min-width: 70px;
-        }
-
-        &:nth-child(5) {
-            width: 160px;
-            min-width: 160px;
-        }
-
-        &:nth-child(6) {
-            width: 300px;
-            min-width: 300px;
-        }
-
-        &:nth-child(7) {
             width: 100px;
             min-width: 100px;
-        }
 
-        &:nth-child(8) {
-            width: 100px;
-            min-width: 100px;
         }
     }
 }
 
-.product-item {
-    font-size: 12px;
+.category-item {
+    font-size: 14px;
 
     .tag {
         font-size: 10px;
@@ -191,33 +168,13 @@
     }
 }
 
-.search-area {
-    width: 100%;
+.categorys-block {
+    .search-area {
+        margin-top: 30px;
 
-    .group-inline {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-end;
-    }
-
-    .group-input,
-    .group-select {
-        font-size: 14px;
-    }
-
-    .group-input {
-        margin: 0;
-        width: calc(50% - 5px);
-    }
-
-    .group-select {
-        width: calc(30% - 5px);
-    }
-
-    button {
-        width: calc(20% - 5px);
-        height: 38px;
-        margin-bottom: 12px;
+        .group-input {
+            margin: 0;
+            width: calc(80% - 5px);
+        }
     }
 }

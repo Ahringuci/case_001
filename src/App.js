@@ -5,7 +5,7 @@ import HomeLayout from "./pages/Home";
 import Login from "./features/login/Login";
 import Dashboard from "./pages/Dashboard";
 import Products from "./pages/Products";
-import Categories from "./pages/Categories";
+import CategoryPage from "./pages/Categories";
 import Staff from "./pages/Staff";
 
 function App() {
@@ -16,7 +16,7 @@ function App() {
                 <Route index element={<HomeLayout />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="products" element={<Products />} />
-                <Route path="categories" element={<Categories />} />
+                <Route path="categories" element={<CategoryPage />} />
                 <Route path="staff" element={<Staff />} />
                 <Route path="" element={<Staff />} />
             </Route>
