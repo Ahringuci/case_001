@@ -1,0 +1,23 @@
+.nav-group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 40px;
+
+    a {
+        width: calc(25% - 20px);
+        height: 50px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.active {
+            color: var(--main);
+            background-color: #fff;
+        }
+    }
+
+}

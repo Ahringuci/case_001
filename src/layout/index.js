@@ -8,6 +8,7 @@ import Aside from "../components/Aside";
 import { useNavigate } from "react-router-dom";
 
 import { USER_LOGIN } from "../constants";
+import NavGroup from "../components/NavGroup";
 
 import "./layout.scss";
 
@@ -26,6 +27,7 @@ function Layout() {
             <Header />
             <div className="layout">
                 <Aside />
+                <NavGroup />
                 <Outlet />
             </div>
             <Footer />

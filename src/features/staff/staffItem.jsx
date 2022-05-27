@@ -1,10 +1,9 @@
 import React from "react";
-import { USER_LOGIN } from "../../constants";
 
+import { USER_LOGIN } from "../../constants";
 function CategoryItem(props) {
     const userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
-
-    const { id, title } = props.item;
+    const { id, email } = props.item;
     const { callbackEdit, callbackDelete } = props;
 
     const hanldeEdit = () => {
@@ -18,7 +17,7 @@ function CategoryItem(props) {
     return (
         <tr className="category-item">
             <th>{id}</th>
-            <td>{title}</td>
+            <td>{email}</td>
 
             <td>
                 {userLogin.role === "1" ? (

@@ -1,7 +1,12 @@
 import React from "react";
+import { Staff } from "../../features/staff/Staff";
 
-function Staff() {
-    return <div>Staff</div>;
+function Staffs() {
+    return (
+        <section className="litst-block">
+            <Staff />
+        </section>
+    );
 }
 
-export default Staff;
+export default Staffs;

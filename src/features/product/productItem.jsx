@@ -1,9 +1,11 @@
 import React from "react";
 
 import { defaultAPI, GET_API } from "../../api";
-import { CATEGORIES } from "../../constants";
+import { CATEGORIES, USER_LOGIN } from "../../constants";
 
 function ProductItems(props) {
+    const userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
+
     const { id, title, price, category, description, image, rating } =
         props.item;
 
@@ -44,19 +46,25 @@ function ProductItems(props) {
             <td>{description}</td>
             <td>{rating.rate}</td>
             <td>
-                <button
-                    className="outline"
-                    aria-label="edit value"
-                    onClick={hanldeEdit}
-                >
-                    Chỉnh sửa
-                </button>
-                <button
-                    aria-label="delete value"
-                    onClick={() => hanldeDelete()}
-                >
-                    Xóa
-                </button>
+                {userLogin.role === "1" ? (
+                    <>
+                        <button
+                            className="outline"
+                            aria-label="edit value"
+                            onClick={hanldeEdit}
+                        >
+                            Chỉnh sửa
+                        </button>
+                        <button
+                            aria-label="delete value"
+                            onClick={() => hanldeDelete()}
+                        >
+                            Xóa
+                        </button>
+                    </>
+                ) : (
+                    ""
+                )}
             </td>
         </tr>
     );

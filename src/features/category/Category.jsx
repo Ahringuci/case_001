@@ -4,11 +4,13 @@ import CategoryTable from "./categoryTable";
 import CategoryAdd from "./categoryAdd";
 
 import { defaultAPI, GET_API } from "../../api";
-import { CATEGORIES } from "../../constants";
+import { CATEGORIES, USER_LOGIN } from "../../constants";
 
 import "./category.scss";
 
 export function Category() {
+    const userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
+
     const value = useSelector((state) => state.categories.value);
 
     const categoryLists =
@@ -49,13 +51,16 @@ export function Category() {
                             placeholder="Nhập tên danh mục..."
                         />
                     </label>
-
-                    <button
-                        className="outline"
-                        onClick={() => handleAddcategory(true)}
-                    >
-                        Thêm danh mục
-                    </button>
+                    {userLogin.role === "1" ? (
+                        <button
+                            className="outline"
+                            onClick={() => handleAddcategory(true)}
+                        >
+                            Thêm danh mục
+                        </button>
+                    ) : (
+                        ""
+                    )}
                 </div>
             </div>
 

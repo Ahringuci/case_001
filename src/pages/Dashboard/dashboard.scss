@@ -1,13 +1,17 @@
 .dashboard {
     .group-figure {
+        display: flex;
+        justify-content: space-between;
+
         figure {
+            box-shadow: 0 0 20px #ccc;
+
             &:nth-child(1) {
-                width: 100%;
-                max-width: 768px;
+                width: 60%;
             }
 
             &:nth-child(2) {
-                width: calc(40% - 10px);
+                width: calc(40% - 28px);
             }
 
             img {
@@ -15,21 +19,5 @@
                 display: block;
             }
         }
-    }
-
-    &-group {
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        justify-content: space-between;
-
-
-        button {
-            width: calc(50% - 10px);
-            height: 100px;
-
-            font-size: 20px;
-        }
-
     }
 }

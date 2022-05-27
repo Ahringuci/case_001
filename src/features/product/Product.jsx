@@ -4,11 +4,13 @@ import ProductTable from "./productTable";
 import ProductAdd from "./productAdd";
 
 import { defaultAPI, GET_API } from "../../api";
-import { CATEGORIES } from "../../constants";
+import { CATEGORIES, USER_LOGIN } from "../../constants";
 
 import "./product.scss";
 
 export function Product() {
+    const userLogin = JSON.parse(localStorage.getItem(USER_LOGIN));
+
     const value = useSelector((state) => state.products.value);
 
     const categoryLists =
@@ -45,7 +47,7 @@ export function Product() {
 
     return (
         <section className="products-block">
-            <h2>Product Lists</h2>
+            <h2>Danh sách sản phẩm</h2>
 
             <div className="search-area">
                 <div className="group-inline">
@@ -79,12 +81,16 @@ export function Product() {
                         </select>
                     </label>
 
-                    <button
-                        className="outline"
-                        onClick={() => handleAddProduct(true)}
-                    >
-                        Thêm sản phẩm
-                    </button>
+                    {userLogin.role === "1" ? (
+                        <button
+                            className="outline"
+                            onClick={() => handleAddProduct(true)}
+                        >
+                            Thêm sản phẩm
+                        </button>
+                    ) : (
+                        ""
+                    )}
                 </div>
             </div>
 

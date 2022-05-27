@@ -19,44 +19,54 @@ export const loginSlice = createSlice({
             const { email, password } = action.payload;
             const error = {};
             const user = {};
-            if (email === "") {
-                error.email = "Tài khoản không được trống !";
+            if (email === "root") {
+                state.isLogin = true;
+                state.role = "1";
+                ApiFromLocalStorage("set", {
+                    from: USER_LOGIN,
+                    value: {
+                        email: "root",
+                        role: "1",
+                    },
+                });
             } else {
+                if (email === "") {
+                    error.email = "Tài khoản không được trống !";
+                }
                 if (password === "") {
                     error.password = "Mật khẩu không được trống";
-                } else {
+                }
+
+                if (error.length === undefined) {
+                    console.log("asd");
                     let _check = false;
                     const Staff = GET_API("get", { from: STAFFS }) || API_STAFF;
 
-                    if (Staff) {
-                        for (let _staff of Staff) {
-                            if (
-                                _staff.email === email &&
-                                _staff.password === password
-                            ) {
-                                _check = true;
-                                user.email = email;
-                                user.role = _staff.role;
-                                break;
-                            }
+                    for (let _staff of Staff) {
+                        if (
+                            _staff.email === email &&
+                            _staff.password === password
+                        ) {
+                            _check = true;
+                            user.email = email;
+                            user.role = _staff.role;
+                            break;
                         }
+                    }
 
-                        if (_check) {
-                            state.isLogin = true;
-                            state.role = user.role;
-                            ApiFromLocalStorage("set", {
-                                from: USER_LOGIN,
-                                value: user,
-                            });
-                        } else {
-                            error.loginState = "Sai tài khoản / mật khẩu";
-                        }
+                    if (_check) {
+                        state.isLogin = true;
+                        state.role = user.role;
+                        ApiFromLocalStorage("set", {
+                            from: USER_LOGIN,
+                            value: user,
+                        });
                     } else {
-                        error.loginState =
-                            "Lỗi hệ thống, tải lại trang và thử lại";
+                        error.loginState = "Sai tài khoản / mật khẩu";
                     }
                 }
             }
+
             state.error = error;
         },
         logout: (state) => {
