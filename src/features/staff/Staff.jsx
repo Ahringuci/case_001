@@ -30,7 +30,7 @@ export function Staff() {
     let _aaa = [...staffLists];
 
     if (findstaff.staffname !== "") {
-        _aaa = value.filter((p) => p.title.includes(findstaff.staffname));
+        _aaa = value.filter((p) => p.email.includes(findstaff.staffname));
     }
 
     return (

@@ -38,7 +38,6 @@ export const loginSlice = createSlice({
                 }
 
                 if (error.length === undefined) {
-                    console.log("asd");
                     let _check = false;
                     const Staff = GET_API("get", { from: STAFFS }) || API_STAFF;
 

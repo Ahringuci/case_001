@@ -129,7 +129,7 @@ a {
         height: 8px;
 
         border-radius: 99px;
-        background-color: #333;
+        background-color: #eee;
 
         &::after {
             content: '';
@@ -138,8 +138,8 @@ a {
             border-radius: 99px;
 
             border: 1px solid transparent;
-            border-top-color: #222;
-            border-left-color: #222;
+            border-top-color: #eee;
+            border-left-color: #eee;
 
             position: absolute;
             z-index: -1;
